@@ -65,18 +65,40 @@ try {
             MembershipRule   = $group.MembershipRule
         }
 
-        # Export members
+        # Export members (handle users, groups, and other object types)
         foreach ($member in $members) {
+            $memberType = "Unknown"
+            $memberName = ""
+            $memberUPN = ""
+            
+            # Try to get as User first
             $memberDetails = Get-MgUser -UserId $member.Id -ErrorAction SilentlyContinue
             if ($memberDetails) {
-                $memberships += [PSCustomObject]@{
-                    GroupName       = $group.DisplayName
-                    GroupId         = $group.Id
-                    MemberName      = $memberDetails.DisplayName
-                    MemberUPN       = $memberDetails.UserPrincipalName
-                    MemberId        = $member.Id
-                    MemberType      = "User"
+                $memberType = "User"
+                $memberName = $memberDetails.DisplayName
+                $memberUPN = $memberDetails.UserPrincipalName
+            }
+            else {
+                # Try to get as Group
+                $groupDetails = Get-MgGroup -GroupId $member.Id -ErrorAction SilentlyContinue
+                if ($groupDetails) {
+                    $memberType = "Group"
+                    $memberName = $groupDetails.DisplayName
                 }
+                else {
+                    # Could be Service Principal or Device
+                    $memberType = "Other"
+                    $memberName = $member.Id
+                }
+            }
+            
+            $memberships += [PSCustomObject]@{
+                GroupName       = $group.DisplayName
+                GroupId         = $group.Id
+                MemberName      = $memberName
+                MemberUPN       = $memberUPN
+                MemberId        = $member.Id
+                MemberType      = $memberType
             }
         }
     }

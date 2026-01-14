@@ -92,10 +92,17 @@ try {
         
         $healthReport = @()
         foreach ($conn in $connections) {
+            # Safely access nested properties with null checking
+            $lastHealthCheck = if ($conn.HealthCheckStatusDetails) { 
+                $conn.HealthCheckStatusDetails.LastHealthCheckDateTime 
+            } else { 
+                $null 
+            }
+            
             $healthReport += [PSCustomObject]@{
                 ConnectionName   = $conn.DisplayName
                 HealthCheckStatus = $conn.HealthCheckStatus
-                LastHealthCheck  = $conn.HealthCheckStatusDetails.LastHealthCheckDateTime
+                LastHealthCheck  = $lastHealthCheck
                 SubscriptionId   = $conn.SubscriptionId
                 ResourceGroupId  = $conn.ResourceGroupId
             }

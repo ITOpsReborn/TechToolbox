@@ -92,7 +92,7 @@ try {
                 $shName = $sh.Name.Split('/')[1]
                 
                 try {
-                    $sessions = Get-AzWvdUserSession -HostPoolName $hpName -ResourceGroupName $rgName -SessionHostName $shName -ErrorAction SilentlyContinue
+                    $sessions = Get-AzWvdUserSession -HostPoolName $hpName -ResourceGroupName $rgName -SessionHostName $shName
                     
                     foreach ($session in $sessions) {
                         $allSessions += [PSCustomObject]@{
@@ -109,8 +109,10 @@ try {
                     }
                 }
                 catch {
-                    # Session host may not have any sessions
-                    continue
+                    # Expected: Session host may not have any sessions or may be offline
+                    if ($_.Exception.Message -notlike "*not found*" -and $_.Exception.Message -notlike "*no session*") {
+                        Write-Verbose "Could not retrieve sessions from $shName`: $($_.Exception.Message)"
+                    }
                 }
             }
         }

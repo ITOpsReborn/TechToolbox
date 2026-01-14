@@ -57,7 +57,7 @@ try {
         
         # Get install status for this app
         try {
-            $installStatus = Get-MgDeviceAppManagementMobileAppInstallSummary -MobileAppId $app.Id -ErrorAction SilentlyContinue
+            $installStatus = Get-MgDeviceAppManagementMobileAppInstallSummary -MobileAppId $app.Id
             
             if ($installStatus) {
                 $deploymentStatus += [PSCustomObject]@{
@@ -74,7 +74,10 @@ try {
             }
         }
         catch {
-            Write-Host "  Warning: Could not get install status for $($app.DisplayName)" -ForegroundColor Yellow
+            # Expected for apps without install summaries (e.g., not yet deployed)
+            if ($_.Exception.Message -notlike "*not found*") {
+                Write-Host "  Warning: Could not get install status for $($app.DisplayName): $($_.Exception.Message)" -ForegroundColor Yellow
+            }
         }
     }
 

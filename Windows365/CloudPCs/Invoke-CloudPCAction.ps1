@@ -89,6 +89,13 @@ try {
                 }
                 
                 "Reprovision" {
+                    # Validate Cloud PC is in a valid state for reprovision
+                    $validStates = @("provisioned", "failed", "notProvisioned")
+                    if ($pc.Status -notin $validStates) {
+                        Write-Host "  ✗ Cannot reprovision Cloud PC in '$($pc.Status)' state. Valid states: $($validStates -join ', ')" -ForegroundColor Red
+                        continue
+                    }
+                    
                     Invoke-MgReprovisionDeviceManagementVirtualEndpointCloudPC -CloudPCId $pc.Id
                     Write-Host "  ✓ Reprovision initiated successfully" -ForegroundColor Green
                     Write-Host "  Note: This process may take 30-90 minutes to complete." -ForegroundColor Yellow

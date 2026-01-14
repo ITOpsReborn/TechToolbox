@@ -42,9 +42,15 @@ param(
 )
 
 function New-RandomPassword {
+    # Use cryptographically secure random number generator
     $length = 16
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()"
-    $password = -join ((1..$length) | ForEach-Object { $chars[(Get-Random -Maximum $chars.Length)] })
+    $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+    $bytes = New-Object byte[] $length
+    $rng.GetBytes($bytes)
+    
+    $password = -join ($bytes | ForEach-Object { $chars[$_ % $chars.Length] })
+    $rng.Dispose()
     return $password
 }
 
