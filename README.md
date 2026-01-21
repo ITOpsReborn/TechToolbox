@@ -19,6 +19,7 @@ TechToolbox/
 │   ├── Devices/                # Device inventory and management
 │   ├── Policies/               # Configuration policy management
 │   ├── Applications/           # Application deployment scripts
+│   ├── Remediation/            # Detect and remediate local configuration issues
 │   └── README.md
 ├── Windows365/                 # Windows 365 Cloud PC Management
 │   ├── CloudPCs/               # Cloud PC operations
@@ -95,6 +96,7 @@ Manage devices, policies, and applications in Microsoft Intune.
 - `Sync-IntuneDevices.ps1` - Trigger device sync operations
 - `Export-IntunePolicies.ps1` - Backup configuration and compliance policies
 - `Get-AppDeploymentStatus.ps1` - Monitor application deployment
+- `Remediation/` - Detection and remediation scripts for local configuration issues
 
 [📖 View Intune Documentation](./Intune/README.md)
 
