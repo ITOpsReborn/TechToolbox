@@ -196,11 +196,12 @@ This project is provided as-is for use within organizations managing Microsoft c
 
 ## 📝 Changelog
 
-### Version 1.0.0 (Initial Release)
 - Entra ID management scripts (Users, Groups, Conditional Access)
 - Intune management scripts (Devices, Policies, Applications)
 - Windows 365 management scripts (Cloud PCs, Provisioning)
 - Azure Virtual Desktop management scripts (Session Hosts, Host Pools, User Sessions)
+### Version 1.0.1 (2026-01-21)
+- Added Intune `Remediation/` folder, `Intune/Remediation/README.md`, and SecureBoot detection/remediation scripts
 
 ---
 
