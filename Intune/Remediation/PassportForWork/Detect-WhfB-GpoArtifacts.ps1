@@ -3,27 +3,16 @@
 .SYNOPSIS
   Detects legacy WHfB GPO tattoos that can conflict with CKCT while preserving Intune CSP.
 
+.AUTHOR: Tim Knapp
+
 .RETURNS
   Exit 0 = Compliant (no GPO tattoos)
   Exit 1 = Needs remediation (GPO tattoos found)
   Exit 2 = Error
 #>
 
-[CmdletBinding()]
-
-[string]$TenantId = ""
-
 try {
     $ErrorActionPreference = 'Stop'
-
-    # --- PRESERVE (CSP / MDM) ---
-    # Intune CSP/MDM authoritative path (DO NOT MODIFY):
-    # HKLM\SOFTWARE\Microsoft\Policies\PassportForWork\<TenantId>\Device\Policies
-    $CspPreserveRoots = @(
-        "HKLM:\SOFTWARE\Microsoft\Policies\PassportForWork\$TenantId",
-        "HKLM:\SOFTWARE\Microsoft\Policies\PassportForWork\$TenantId\Device",
-        "HKLM:\SOFTWARE\Microsoft\Policies\PassportForWork\$TenantId\Device\Policies"
-    )
 
     # --- TARGET (GPO tattoos ONLY) ---
     # Legacy GPO tattoo location:
@@ -44,15 +33,11 @@ try {
     $needsRemediation = $false
     $report = New-Object System.Collections.Generic.List[string]
 
-    # Log CSP roots if present (for visibility only)
-    foreach ($p in $CspPreserveRoots) {
-        if (Test-Key $p) { $report.Add("PRESERVE (CSP present): $p") }
-    }
-
     # Look for GPO tattoos
     $interestingNames = @(
         'Enabled','UseCertificateForOnPremAuth','UseCloudTrustForOnPremAuth',
-        'PINComplexity','UseEnhancedAntiSpoofing','AllowBioMetrics'
+        'PINComplexity','UseEnhancedAntiSpoofing','AllowBioMetrics', 'DisablePostLogonProvisioning',
+        'RequireSecurityDevice','MinPINLength','MaxPINLength','LockoutThreshold'
     )
 
     foreach ($root in ($GpoTattooRoots + $LegacyCustomTattooRoots)) {
