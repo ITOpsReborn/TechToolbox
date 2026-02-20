@@ -62,7 +62,7 @@ if (Test-Path $EPMClientSettings) {
 }
 
 # 3.b Remove EPMRegElevationRules
-$EPMRegElevationRules = "HKLM:\SOFTWARE\Microsoft\EPMAgent\Policies\EvlevationRules"
+$EPMRegElevationRules = "HKLM:\SOFTWARE\Microsoft\EPMAgent\Policies\ElevationRules"
 if (Test-Path $EPMRegElevationRules) {
     Remove-Item $EPMRegElevationRules -Recurse -Force -ErrorAction SilentlyContinue
     Write-Host "Removed EPM Elevation Rules from registry" -ForegroundColor Green
@@ -80,7 +80,7 @@ if (Test-Path $EPMSettingsFiles) {
 }
 
 # 4.b Remove EPM Elevation Rules
-$EPMElevationRules = "C:\Program Files\Microsoft EPM Agent\Policies\EvlevationRules"
+$EPMElevationRules = "C:\Program Files\Microsoft EPM Agent\Policies\ElevationRules"
 if (Test-Path $EPMElevationRules) {
     Remove-Item "$EPMElevationRules\*" -Force -ErrorAction SilentlyContinue
     Write-Host "Removed EPM Elevation Rules from: $EPMElevationRules" -ForegroundColor Green
