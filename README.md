@@ -19,6 +19,7 @@ TechToolbox/
 │   ├── Devices/                # Device inventory and management
 │   ├── Policies/               # Configuration policy management
 │   ├── Applications/           # Application deployment scripts
+│   ├── Remediation/            # Detect and remediate local configuration issues
 │   └── README.md
 ├── Windows365/                 # Windows 365 Cloud PC Management
 │   ├── CloudPCs/               # Cloud PC operations
@@ -95,6 +96,7 @@ Manage devices, policies, and applications in Microsoft Intune.
 - `Sync-IntuneDevices.ps1` - Trigger device sync operations
 - `Export-IntunePolicies.ps1` - Backup configuration and compliance policies
 - `Get-AppDeploymentStatus.ps1` - Monitor application deployment
+- `Remediation/` - Detection and remediation scripts for local configuration issues
 
 [📖 View Intune Documentation](./Intune/README.md)
 
@@ -193,12 +195,13 @@ This project is provided as-is for use within organizations managing Microsoft c
 - [PowerShell Gallery](https://www.powershellgallery.com/)
 
 ## 📝 Changelog
-
-### Version 1.0.0 (Initial Release)
+### Version 1.0.0 (Initial)
 - Entra ID management scripts (Users, Groups, Conditional Access)
 - Intune management scripts (Devices, Policies, Applications)
 - Windows 365 management scripts (Cloud PCs, Provisioning)
 - Azure Virtual Desktop management scripts (Session Hosts, Host Pools, User Sessions)
+### Version 1.0.1 (2026-01-21)
+- Added Intune `Remediation/` folder, `Intune/Remediation/README.md`, and SecureBoot detection/remediation scripts
 
 ---
 

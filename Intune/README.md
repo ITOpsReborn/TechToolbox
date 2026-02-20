@@ -24,6 +24,7 @@ Connect-MgGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All", "DeviceM
 - **Devices/** - Device management and inventory scripts
 - **Policies/** - Configuration policy management scripts
 - **Applications/** - Application deployment and management scripts
+ - **Remediation/** - Scripts to detect and remediate local configuration issues (GPO remnants, SecureBoot settings, BitLocker AAD backups, etc.)
 
 ## Common Tasks
 
@@ -44,6 +45,12 @@ Connect-MgGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All", "DeviceM
 - Monitor app installation status
 - Manage app protection policies
 - Update application assignments
+
+### Remediation
+- Detect and remediate local configuration issues left by legacy GPOs or misconfigurations
+- Typical tasks: remove residual GPO registry settings, enable BitLocker AAD backup, fix SecureBoot settings
+- Detection scripts exit `0` when compliant and `1` when remediation is required
+- Remediation scripts exit `0` on success and `1` on error
 
 ## Best Practices
 
