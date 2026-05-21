@@ -332,6 +332,23 @@ function Set-LockScreen {
     Disable-InteractiveLogon
 }
 
+function Register-RebootTask {
+    Write-Log -Message 'Staging a scheduled reboot in 2 minutes...'
+
+    $taskName = 'RemoteLockout-Reboot'
+    $trigger = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddMinutes(2))
+    $action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '/r /f /t 0'
+    $principal = New-ScheduledTaskPrincipal -UserId 'SYSTEM' -LogonType ServiceAccount -RunLevel Highest
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -DeleteExpiredTaskAfter (New-TimeSpan -Minutes 5)
+    $trigger.EndBoundary = (Get-Date).AddMinutes(5).ToString('s')
+
+    # Remove existing task if present
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
+
+    Register-ScheduledTask -TaskName $taskName -Trigger $trigger -Action $action -Principal $principal -Settings $settings -Force | Out-Null
+    Write-Log -Message "Scheduled task '$taskName' created. Device will reboot in 2 minutes (task auto-deletes after execution)."
+}
+
 function Restore-LockScreen {
     Write-Log -Message 'Restoring original login screen settings...'
 
@@ -451,6 +468,9 @@ switch ($Mode) {
         }
         Write-Log -Message 'All user sessions have been logged off.'
 
+        # Stage a reboot via scheduled task (2 minutes from now)
+        Register-RebootTask
+
         Write-Log -Message 'Remote Lockout installation completed successfully.'
         exit 0
     }
@@ -466,6 +486,9 @@ switch ($Mode) {
             Remove-Item -Path $StagingPath -Recurse -Force
             Write-Log -Message "Removed staging directory: $StagingPath"
         }
+
+        # Stage a reboot via scheduled task (2 minutes from now)
+        Register-RebootTask
 
         Write-Log -Message 'Remote Lockout uninstallation completed successfully.'
         exit 0
