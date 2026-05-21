@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteLockout>
+    <!-- Path to the image file (relative to script directory or absolute path) -->
+    <LockImage>LockScreen.png</LockImage>
+    <!-- First line of text displayed on the lock screen -->
+    <Line1>This device has been remotely locked.</Line1>
+    <!-- Second line of text displayed on the lock screen -->
+    <Line2>Contact your IT administrator for assistance.</Line2>
+    <!-- Text color in hex format (e.g., #FFFFFF for white) -->
+    <TextColor>#FFFFFF</TextColor>
+</RemoteLockout>

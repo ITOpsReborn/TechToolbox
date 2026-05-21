@@ -21,10 +21,34 @@ Connect-MgGraph -Scopes "DeviceManagementManagedDevices.ReadWrite.All", "DeviceM
 
 ## Folder Structure
 
-- **Devices/** - Device management and inventory scripts
-- **Policies/** - Configuration policy management scripts
+- **Administration/** - Diagnostic and reporting tools
+  - `RSOP.DEV/Get-RSOPIntune.ps1` - Resultant Set of Policy for Intune
+  - `RSOP.DEV/Get-RSOPIntuneGraph.ps1` - RSOP via Microsoft Graph API
 - **Applications/** - Application deployment and management scripts
- - **Remediation/** - Scripts to detect and remediate local configuration issues (GPO remnants, SecureBoot settings, BitLocker AAD backups, etc.)
+  - `Get-AppDeploymentStatus.ps1` - Monitor application deployment status
+  - `RemoteLock/Invoke-RemoteLockout.ps1` - Win32 app that locks out a device (custom lock screen, disables logon, logs off sessions)
+- **Devices/** - Device management and inventory scripts
+  - `Get-IntuneDeviceInventory.ps1` - Device inventory with compliance status
+  - `Sync-IntuneDevices.ps1` - Trigger device sync operations
+- **Policies/** - Configuration policy management scripts
+  - `Export-IntunePolicies.ps1` - Backup configuration and compliance policies
+- **Remediation/** - Detect/remediate script pairs for local configuration issues
+  - `AutomaticUpdates/` - Detect and remediate Automatic Updates GPO policy
+  - `BitlockerAADBackup/` - Detect and remediate BitLocker AAD key backup
+  - `ConnectedUserExperiences/` - Detect and remediate DiagTrack service startup
+  - `DeclaredConfigurationCleanup/` - Clean up declared configuration artifacts
+  - `PassportForWork/` - Detect and remediate WHfB GPO tattoos
+  - `SecureBootCertUpdate/` - Detect and remediate Secure Boot update settings
+  - `WindowsUpdateGPOSettings/` - Detect and remediate Windows Update GPO settings
+- **Scripts/** - Intune platform scripts deployed to managed devices
+  - `Disable-DeliveryOptimizationVerboseLogs.ps1` - Disable DO verbose logging
+  - `Disable-LocalUserAccounts.ps1` - Disable all local accounts except LAPS
+  - `Enable-DeliveryOptimizationVerboseLogs.ps1` - Enable DO verbose logging
+  - `Install-ProvisioningPacakge.ps1` - Install a provisioning package
+  - `Install-ProvisioningPacakgeWithOutRippling.ps1` - Install provisioning package (Rippling exclusion)
+  - `Install-WindowsFonts.ps1` - Install custom Windows fonts
+  - `Inovke-WindowsUpdateRepair.ps1` - Repair Windows Update components
+  - `Revoke-WHfBCredentials.ps1` - Remove all WHfB credentials, trigger Intune sync, log off sessions, and reboot
 
 ## Common Tasks
 

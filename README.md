@@ -16,10 +16,12 @@ TechToolbox/
 │   ├── ConditionalAccess/      # Conditional Access policy scripts
 │   └── README.md
 ├── Intune/                     # Microsoft Intune Management
+│   ├── Administration/         # RSOP and diagnostic tools
+│   ├── Applications/           # Application deployment and Remote Lockout
 │   ├── Devices/                # Device inventory and management
 │   ├── Policies/               # Configuration policy management
-│   ├── Applications/           # Application deployment scripts
 │   ├── Remediation/            # Detect and remediate local configuration issues
+│   ├── Scripts/                # Platform scripts for Intune-managed devices
 │   └── README.md
 ├── Windows365/                 # Windows 365 Cloud PC Management
 │   ├── CloudPCs/               # Cloud PC operations
@@ -96,7 +98,11 @@ Manage devices, policies, and applications in Microsoft Intune.
 - `Sync-IntuneDevices.ps1` - Trigger device sync operations
 - `Export-IntunePolicies.ps1` - Backup configuration and compliance policies
 - `Get-AppDeploymentStatus.ps1` - Monitor application deployment
-- `Remediation/` - Detection and remediation scripts for local configuration issues
+- `Invoke-RemoteLockout.ps1` - Remote device lockdown via Intune Win32 app (lost/stolen/terminated scenarios)
+- `Get-RSOPIntune.ps1` / `Get-RSOPIntuneGraph.ps1` - Resultant Set of Policy for Intune
+- `Invoke-DeclaredConfigurationCleanup.ps1` - Remove Declared Configuration artifacts and trigger Intune sync
+- `Remediation/` - Detection and remediation script pairs (AutomaticUpdates, BitLocker AAD Backup, Connected User Experiences, PassportForWork, SecureBoot Cert Update, Windows Update GPO Settings)
+- `Scripts/` - Intune platform scripts (credential revocation, font installs, provisioning packages, delivery optimization, Windows Update repair, local account management, and more)
 
 [📖 View Intune Documentation](./Intune/README.md)
 
@@ -195,6 +201,11 @@ This project is provided as-is for use within organizations managing Microsoft c
 - [PowerShell Gallery](https://www.powershellgallery.com/)
 
 ## 📝 Changelog
+### Version 1.1.0
+- Added Intune Administration tools (RSOP.DEV)
+- Added Intune platform scripts: Revoke-WHfBCredentials, Disable-LocalUserAccounts, Install-WindowsFonts, Install-ProvisioningPackage, Enable/Disable-DeliveryOptimizationVerboseLogs, Invoke-WindowsUpdateRepair, Revoke-WHfBCredentials
+- Added Intune remediation script pairs: AutomaticUpdates, BitlockerAADBackup, ConnectedUserExperiences, DeclaredConfigurationCleanup, PassportForWork, SecureBootCertUpdate, WindowsUpdateGPOSettings
+
 ### Version 1.0.0 (Initial)
 - Entra ID management scripts (Users, Groups, Conditional Access)
 - Intune management scripts (Devices, Policies, Applications)

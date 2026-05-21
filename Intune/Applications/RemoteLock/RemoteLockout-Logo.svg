@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="#0078D4"/>
+  
+  <!-- Monitor body -->
+  <rect x="120" y="140" width="272" height="180" rx="12" ry="12" fill="#1B1B1B" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- Monitor screen -->
+  <rect x="136" y="156" width="240" height="148" rx="4" ry="4" fill="#2D2D2D"/>
+  
+  <!-- Monitor stand -->
+  <rect x="230" y="320" width="52" height="28" fill="#1B1B1B"/>
+  <rect x="200" y="348" width="112" height="12" rx="6" ry="6" fill="#1B1B1B" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Lock body on screen -->
+  <rect x="222" y="220" width="68" height="56" rx="8" ry="8" fill="#D83B01"/>
+  
+  <!-- Lock shackle -->
+  <path d="M 238 220 L 238 200 A 18 18 0 0 1 274 200 L 274 220" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  
+  <!-- Keyhole -->
+  <circle cx="256" cy="244" r="8" fill="#FFFFFF"/>
+  <rect x="253" y="244" width="6" height="16" rx="3" ry="3" fill="#FFFFFF"/>
+  
+  <!-- Shield accent lines on screen -->
+  <line x1="152" y1="176" x2="200" y2="176" stroke="#D83B01" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="152" y1="188" x2="188" y2="188" stroke="#D83B01" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <line x1="312" y1="176" x2="360" y2="176" stroke="#D83B01" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="324" y1="188" x2="360" y2="188" stroke="#D83B01" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+</svg>

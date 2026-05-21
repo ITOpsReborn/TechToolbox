@@ -70,6 +70,15 @@ if (Test-Path $EPMRegElevationRules) {
     Write-Host "EPM Registry Elevation Rules not found" -ForegroundColor Gray
 }
 
+# 3.c Remove EPMRuleLookup
+$EPMRuleLookup = "HKLM:\SOFTWARE\Microsoft\EPMAgent\RuleLookup"
+if (Test-Path $EPMRuleLookup) {
+    Remove-Item $EPMRuleLookup -Recurse -Force -ErrorAction SilentlyContinue
+    Write-Host "Removed EPM Rule Lookup from registry" -ForegroundColor Green
+} else {
+    Write-Host "EPM Rule Lookup registry not found not found" -ForegroundColor Gray
+}
+
 # 4.a Remove EPM Client Settings
 $EPMSettingsFiles = "C:\Program Files\Microsoft EPM Agent\Policies\ClientSettings"
 if (Test-Path $EPMSettingsFiles) {
@@ -88,13 +97,22 @@ if (Test-Path $EPMElevationRules) {
     Write-Host "EPM Elevation Rules not found" -ForegroundColor Gray
 }
 
-# 5. Remove Declared Configuration Files
+# 5.a Remove Declared Configuration Files
 $DCFiles = "C:\ProgramData\Microsoft\DC\HostOS"
 if (Test-Path $DCFiles) {
     Remove-Item "$DCFiles\*" -Force -ErrorAction SilentlyContinue
     Write-Host "Removed Declared Configuration files from: $DCFiles" -ForegroundColor Green
 } else {
     Write-Host "Declared Configuration files not found" -ForegroundColor Gray
+}
+
+# 5.b Remove Declared Configuration Files from All Users
+$DCFilesAllUsers = "C:\Users\All Users\Microsoft\DC\HostOS"
+if (Test-Path $DCFilesAllUsers) {
+    Remove-Item "$DCFilesAllUsers\*" -Force -ErrorAction SilentlyContinue
+    Write-Host "Removed All Users Declared Configuration files from: $DCFilesAllUsers" -ForegroundColor Green
+} else {
+    Write-Host "All UsersDeclared Configuration files not found" -ForegroundColor Gray
 }
 
 # 6. Stop EPM Agent Service (if running)
